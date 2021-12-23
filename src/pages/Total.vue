@@ -19,7 +19,7 @@
                 <q-separator />
                 <q-tab-panels v-model="tab" animated>
                     <q-tab-panel name="A1_A2">
-                        <new></new>
+                        <CZ></CZ>
                     </q-tab-panel>
 
                     <q-tab-panel name="CZ">
@@ -37,11 +37,11 @@
 
 <script>
 import { ref } from 'vue';
-import news from '../pages/new.vue'
+import news from '../pages/CZ.vue'
 
 export default {
     components: {
-        new: news
+        CZ: news
     },
     setup () {
         return {

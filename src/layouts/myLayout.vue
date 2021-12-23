@@ -21,7 +21,7 @@
         >
             <q-scroll-area class="fit">
                 <q-list v-model="tab" padding>
-                    <q-item to="/new" exact>
+                    <q-item to="/CZ" exact>
                         <q-item-section avatar>
                             <q-icon name="home" />
                         </q-item-section>
