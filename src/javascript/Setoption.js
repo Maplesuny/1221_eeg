@@ -11,6 +11,7 @@ export default function Setoption (elementID) {
     let timer
     //----------------------------
     // 連接axios，get data
+    const url = "/api/v1/Time_Information";
     async function axioss (url) {
         return await axios.get(url).then((res) => {
             let data = res.data
