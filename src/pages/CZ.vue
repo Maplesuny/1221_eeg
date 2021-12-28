@@ -28,7 +28,7 @@ import option from "../javascript/Setoption";
 export default {
   setup () {
     // 後端api的port
-    const port = '8080'
+    const port = '8000'
     const start_time = ref(0);
     const end_time = ref(10);
     const montage_type = ref(1);
