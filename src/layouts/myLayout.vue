@@ -1,10 +1,10 @@
 <template>
     <q-layout view="hHh Lpr lFf">
         <q-header elevated>
-            <q-toolbar>
+            <q-toolbar class="bg-blue-grey-6">
                 <q-btn flat dense round icon="menu" aria-label="Menu" @click="drawer = !drawer" />
                 <q-toolbar-title>Quasar App</q-toolbar-title>
-                <div>Quasar v{{ $q.version }}</div>
+                <q-space></q-space>
             </q-toolbar>
         </q-header>
 
@@ -49,7 +49,7 @@
             </q-scroll-area>
         </q-drawer>
 
-        <q-page-container>
+        <q-page-container style="height: 100vh">
             <router-view />
         </q-page-container>
     </q-layout>

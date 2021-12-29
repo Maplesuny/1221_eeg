@@ -1,15 +1,26 @@
 <template>
-  <div id="Echarts"></div>
-  <div class="flex flex-center items-center full-width">
-    <!-- q-pb-lg  -->
-    <q-btn @click="pre_button" v-bind:disabled="page <= Minpage">上一頁</q-btn>
-    <span class="q-ml-md">第 {{ page }} 頁 / 共 {{ Maxpage }}頁</span>
-    <q-btn @click="next_button" v-bind:disabled="page >= Maxpage" class="q-ml-md">下一頁</q-btn>
-    <span class="q-ml-md">跳至</span>
-    <q-input outlined v-model="jump_to" class="pagination-input" placeholder="請輸入頁數" mask="##"></q-input>
-    <span class="q-ml-md">頁</span>
-    <q-btn @click="send_page" class="q-ml-md" v-bind:disable="jump_to > Maxpage">送出</q-btn>
-    <!-- <q-btn @click="send_page" v-else disable class="q-ml-md">送出</q-btn> -->
+  <div style="position: relative" class="fit column">
+    <div id="chartDiv" style="height:100%; width:calc(100% - 500px)">
+      <div>
+        <div id="Echarts"></div>
+      </div>
+      <canvas id="canvas" style="position: absolute;top: 80px; left:5px;"></canvas>
+      <div class="flex flex-center items-center full-width">
+        <!-- q-pb-lg  -->
+        <q-btn @click="pre_button" v-bind:disabled="page <= Minpage">上一頁</q-btn>
+        <span class="q-ml-md">第 {{ page }} 頁 / 共 {{ Maxpage }}頁</span>
+        <q-btn @click="next_button" v-bind:disabled="page >= Maxpage" class="q-ml-md">下一頁</q-btn>
+        <span class="q-ml-md">跳至</span>
+        <q-input outlined v-model="jump_to" class="pagination-input" placeholder="請輸入頁數" mask="##"></q-input>
+        <span class="q-ml-md">頁</span>
+        <q-btn @click="send_page" class="q-ml-md" v-bind:disable="jump_to > Maxpage">送出</q-btn>
+        <!-- <q-btn @click="send_page" v-else disable class="q-ml-md">送出</q-btn> -->
+      </div>
+      <div id="timeline-container" style></div>
+    </div>
+    <div id="testtext" style="width: 400px; height:100%;" class="q-pl-md">
+      <Todo :inputText="sec_range"></Todo>
+    </div>
   </div>
 </template>
 
@@ -25,7 +36,12 @@ import {
 import * as echarts from "echarts";
 import axios from "axios";
 import option from "../javascript/Setoption";
+import timeline from '../javascript/Timeline'
+import todo from '../pages/TODO.vue'
 export default {
+  components: {
+    Todo: todo,
+  },
   setup () {
     // 後端api的port
     const port = '8000'
@@ -49,6 +65,9 @@ export default {
     const grid = [];
     const toolbox = [];
     const brush = [];
+    var rangeArray = [
+      [],
+    ]
     const time_url = "http://127.0.0.1:" + port + "/api/v1/Time_Information";
     const json_url =
       "http://127.0.0.1:" + port + "/api/v1/eegData?start_time=" +
@@ -58,8 +77,10 @@ export default {
       "&montage_type=" +
       montage_type.value;
     // echart brush用到
-    let range_start;
-    let range_end;
+    let range_start;  // range0 [0]
+    let range_end;    // range0 [1]
+    let range_start1  // range1 [0]
+    let range_end1    // range1 [1]
     let coor_start = ref(0);
     let coor_end = ref(0);
     let coordRange_start = ref(0);
@@ -70,6 +91,9 @@ export default {
     let save_cor_time = [];
     var rangeArray = [[]];
     let brush_ares0 = ref([]);
+
+    const range0 = ref([])
+    const range1 = ref([])
     let aaaa = ref([]);
     let bbbb = ref([]);
     aaaa.value = [
@@ -151,7 +175,7 @@ export default {
     function Setting_option () {
       console.log("mychart", myChart);
       grid.push({
-        left: "100px",
+        left: "80px",
         right: "1%",
         containLabel: false,
       });
@@ -283,7 +307,7 @@ export default {
         montage_type.value;
       let series1 = [];
       let Data = await axioss(url);
-      console.log(Data);
+      // console.log(Data);
       // 將資料合併到save_arr ，format : [time,value]  value只有10秒資料
       let all_save_arr = [];
       for (let i = 0; i < Data.length; i++) {
@@ -387,7 +411,7 @@ export default {
       const chartDom = document.getElementById("Echarts");
       let series = [];
       let echarts_WH = {
-        width: 1600 + "px",
+        width: 1400 + "px",
         height: 670 + "px",
       };
       myChart = echarts.init(chartDom, null, echarts_WH);
@@ -495,19 +519,34 @@ export default {
           console.log("brush_ares0內存的:", brush_ares0.value);
         }
       });
+
+
+
+
+      //     canvas 
+
+      var canvas = document.getElementById("canvas")
+      canvas.width = 75
+      canvas.height = 700
+      var ctx = canvas.getContext('2d')
+      ctx.font = '15px serif';
+      channel_array.value.forEach(function (channel_name, idx) {
+        // console.log(channel_name)
+        //8.35   越大整體越縮小
+        ctx.fillText(channel_name, 10, (idx * 295) / 9.5 + 10);
+      })
+
+
+
+
+      timeline(1, 1, rangeArray)
     }
+
+
+
     // 至多兩個，用來比對前後兩值是否相同
     let compare_two = [];
-
-
-    let newpage1 = []
-    // 判斷是否為新的一頁
-    function newpage (page) {
-      newpage1.push(page)
-    }
-
-
-    function select (params, brushType) {
+    async function select (params, brushType) {
       console.log("Brushtype", brushType);
       let brushComponent = params.batch[0];
       brush_count.value = params.batch[0].areas.length;
@@ -559,6 +598,19 @@ export default {
         range_start = brushComponent.areas[0].range[0];
         range_end = brushComponent.areas[0].range[1];
       }
+      // 要傳到資料庫的range0
+      range0.value = [range_start, range_end]
+
+      // rnage1 的兩個值
+      range_start1 = brushComponent.areas[0].range[1][0]
+      range_end1 = brushComponent.areas[0].range[1][1]
+      range1.value = [range_start1, range_end1]
+
+      console.log('ss,ss1', range_start1, range_end1)
+      console.log('range0', range0.value)
+      console.log('range1', range1.value)
+
+
       // 再將rnage座標轉作為xy的座標(coordRange的值)
       coordRange_start.value = myChart.convertFromPixel({ seriesIndex: 0 }, [
         range_start,
@@ -570,6 +622,12 @@ export default {
       ])[0];
       console.log("range_start/end", range_start, range_end);
       console.log("brushComponent", brushComponent);
+
+      if (page.value != 1) {
+        coordRange_start.value = coordRange_start.value + 10 * (page.value - 1)
+        corrdRange_end.value = corrdRange_end.value + 10 * (page.value - 1)
+      }
+      // 頁數不等於1的話，要根據頁數換算對應秒數
       console.log(
         "coordRange_start/end",
         coordRange_start.value,
@@ -581,6 +639,18 @@ export default {
         roundToTwo(corrdRange_end.value) +
         "s";
       // 轉換成筆數存入arr
+
+
+      // post to database 
+      // axios.post('http://127.0.0.1:8000/api/v1/insert_data')
+
+      let post_url = 'http://127.0.0.1:8000/api/v1/insert_data?page=' + page.value + '&starttime=' + coordRange_start.value + '&endtime=' + corrdRange_end.value + '&range0=[' + range_start + ',' + range_end + ']' + '&range1=[' + range_start1 + ',' + range_end1 + ']'
+      // console.log('post_url', post_url)
+      axios.post(post_url)
+
+
+
+
       coor_start.value = Math.round(coordRange_start.value * 512);
       coor_end.value = Math.round(corrdRange_end.value * 512);
       save_cor_time.push(coor_start.value);
@@ -589,6 +659,7 @@ export default {
     watch(brush_ares0.value, () => {
       console.log("brush_area0", brush_ares0.value);
     });
+
 
     onBeforeMount(() => {
       SecTopage(time_url);
@@ -604,6 +675,7 @@ export default {
       pre_button,
       next_button,
       send_page,
+      sec_range
     };
   },
 };

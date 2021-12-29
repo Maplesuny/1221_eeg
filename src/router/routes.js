@@ -8,6 +8,8 @@ const routes = [
       { path: '/total', component: () => import('pages/Total.vue') },
       { path: '/CZ', component: () => import('pages/CZ.vue') },
       { path: '/table', component: () => import('pages/table.vue') },
+      { path: '/eegtable', component: () => import('pages/eegdatabase.vue') },
+
     ]
   },
 

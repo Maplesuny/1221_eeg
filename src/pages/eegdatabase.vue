@@ -184,7 +184,7 @@ export default {
             { name: 'Default 2  ', align: 'center', label: 'Default 2 ' },
         ])
 
-        const tables_url = 'http://127.0.0.1:' + port + '/api/v1/gettablenames?database=table'
+        const tables_url = 'http://127.0.0.1:' + port + '/api/v1/gettablenames?database=eeg'
 
         const { axioss } = option()
         // 存所有的資料庫
@@ -194,7 +194,8 @@ export default {
 
         // 每個資料庫他的column
         async function tablecolumn_function (table) {
-            let tables_columns = 'http://127.0.0.1:8000/api/v1/gettable_column/' + table + '?database=table'
+            let tables_columns = 'http://127.0.0.1:8000/api/v1/gettable_column/' + table + '?database=eeg'
+            console.log(tables_columns)
             tablecolumn.value = await axioss(tables_columns)
             list_column.value = []
             tablecolumn.value.forEach(function (parameter, idx) {
@@ -211,7 +212,7 @@ export default {
 
         // 每個資料庫他的rows
         async function table_data_function (table) {
-            let tabe_data_url = 'http://127.0.0.1:8000/api/v1/gettable_data/' + table + '?database=table'
+            let tabe_data_url = 'http://127.0.0.1:8000/api/v1/gettable_data/' + table + '?database=eeg'
             tabledata.value = await axioss(tabe_data_url)
             console.log(tabledata.value.length)
         }

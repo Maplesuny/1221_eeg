@@ -20,7 +20,7 @@ export default function drawTimeLine (pages, channels, rangeArray) {
         // console.log('childRangeArray',childRangeArray[0])
         var padding = 80;
         var startX = padding;
-        var length = 1500;
+        var length = 1300;
         var endX = startX + length;
         console.log('startx', endX)
         var ns = "http://www.w3.org/2000/svg";

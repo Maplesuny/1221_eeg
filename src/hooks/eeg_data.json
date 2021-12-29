@@ -1,0 +1,139 @@
+[
+    {
+        "id": 1,
+        "name": "Normal",
+        "state": [
+            {
+                "id": 1,
+                "name": "Normal awake",
+                "symptom": [
+                    "alpha variant rhythms",
+                    "Lambda waves",
+                    "Posterior slow waves in youth",
+                    "Excessive beta activity",
+                    "Hyperventilation induced build up",
+                    "Photic drive response",
+                    "Photomyogenic response",
+                    "Arousal pattern",
+                    "Other (+ free text)"
+                ]
+            },
+            {
+                "id": 2,
+                "name": "Sleep",
+                "symptom": [
+                    "POSTs",
+                    "Vertex sharp wave",
+                    "Sleep spindles",
+                    "K complex",
+                    "Slow waves",
+                    "Sawtooth waves",
+                    "Other (+ free text)"
+                ]
+            },
+            {
+                "id": 3,
+                "name": "Artifacts",
+                "symptom": [
+                    "Eye blinks",
+                    "Eye movements ( (horizontal, vertical)",
+                    "Chewing artifact",
+                    "Glossokinetic artifact",
+                    "Movement artifact",
+                    "EMG artifact",
+                    "Respiration artifact",
+                    "Pulse artifact",
+                    "ECG artifact",
+                    "Sweat artifact",
+                    "Electrode pops",
+                    "Salt bridge artifact",
+                    "Other (+ free text)"
+                ]
+            },
+            {
+                "id": 4,
+                "name": "Benign variants",
+                "symptom": [
+                    "Wicket spikes",
+                    "Small sharp spikes",
+                    "Rhythmic temporal theta burst of drowsiness",
+                    "Ciganek rhythm (midline central theta)",
+                    "6 Hz spike-and-slow-wave",
+                    "14 and 6 Hz positive bursts",
+                    "Breach rhythm",
+                    "Temporal slowing in elderly subjects",
+                    "Other (+ free text)"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Abnormal",
+        "state": [
+            {
+                "id": 1,
+                "name": "Epileptiform interictal activity",
+                "symptom": [
+                    "Spike",
+                    "Spike-and-slow-wave",
+                    "Polyspikes",
+                    "Polyspike-and-slow-wave",
+                    "Sharp-wave",
+                    "Sharp-and-slow-wave",
+                    "Other (+ free text)"
+                ]
+            },
+            {
+                "id": 2,
+                "name": "Abnormal slow Activity",
+                "symptom": [
+                    "Intermittent Polymorphic delta activity (IPDA)",
+                    "Continuous Polymorphic delta activity (CPDA)",
+                    "Frontal intermittent rhythmic delta activity (FIRDA)",
+                    "Occipital intermittent rhythmic delta activity (OIRDA)",
+                    "Temporal intermittent rhythmic delta activity (TIRDA)",
+                    "intermittent rhythmic theta activity",
+                    "Diffuse background slowing",
+                    "GRDA",
+                    "Electrocerebral inactivity (ECI)",
+                    "Other (+ free text)"
+                ]
+            },
+            {
+                "id": 3,
+                "name": "Periodic discharge",
+                "symptom": [
+                    "GPD",
+                    "GPD with triphasic morphology",
+                    "LPD",
+                    "BIPD",
+                    "Multifocal PD",
+                    "Unilateral independent PD",
+                    "Burst-suppression",
+                    "Burst-attenuation",
+                    "Other (+ free text)"
+                ]
+            },
+            {
+                "id": 4,
+                "name": "Ictal activity",
+                "symptom": [
+                    "No observable change",
+                    "Obscured by artifacts",
+                    "Polyspikes",
+                    "Fast spike activity or repetitive spikes",
+                    "Low voltage fast activity",
+                    "Polysharp-waves",
+                    "Spike-and-slow-waves",
+                    "Polyspike-and-slow-waves",
+                    "Sharp-and-slow-waves",
+                    "Rhythmic activity in evolution",
+                    "Slow wave of large amplitude",
+                    "Electrodecremental change",
+                    "Other (+ free text)"
+                ]
+            }
+        ]
+    }
+]
